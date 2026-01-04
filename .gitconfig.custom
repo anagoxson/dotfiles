@@ -1,0 +1,10 @@
+[alias]
+    s  = status
+    b  = branch
+    ba = branch -a
+    r  = remote
+    rv = remote -v
+    gr = log --graph --all --decorate --oneline --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%d %s %C(black)%C(bold)%cr %C(reset)%an'
+
+[init]
+	defaultBranch = main

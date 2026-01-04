@@ -1,0 +1,44 @@
+# key mode
+setw -g mode-keys vi
+
+# 256 color
+set -g default-terminal "xterm-256color"
+set -g terminal-overrides "term:colors=256"
+set -g display-time 2000
+
+# copy-mode
+bind v copy-mode
+
+unbind -T copy-mode-vi v; bind -T copy-mode-vi v send-keys -X begin-selection
+unbind -T copy-mode-vi V; bind -T copy-mode-vi V send-keys -X select-line
+unbind -T copy-mode-vi C-v; bind -T copy-mode-vi C-v send-keys -X rectangle-Toggle
+# copy-mode-vi y: 環境別にクリップボードコマンドを設定
+unbind -T copy-mode-vi y
+# WSL2環境の場合
+if-shell 'uname -a | grep -qi microsoft' {
+    bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "clip.exe"
+} {
+    # macOS環境の場合
+    if-shell 'test "$(uname -s)" = "Darwin"' {
+        bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+    } {
+        # Wayland環境の場合
+        if-shell 'test "$XDG_SESSION_TYPE" = "wayland" || test -n "$WAYLAND_DISPLAY"' {
+            bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy"
+        } {
+            # X11環境の場合（デフォルト）
+            bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard"
+        }
+    }
+}
+
+# mouse
+set-option -g mouse on
+
+# pane
+set -g pane-border-style "fg=green,bg=black"
+set -g pane-active-border-style "fg=green,bg=yellow"
+
+# logging
+bind-key H pipe-pane -o '/bin/sh -c "while read -r LINE; do echo \"[\$(date +\"%%Y_%%m%%d_%%H%%M%%S_%%N\")] \${LINE}\" >> \${HOME}/.tmux/log/\$(date +%Y%m%d-%H%M%S)-#S-#I.#P.log; done "' \; display-message "Logging start."
+bind-key h pipe-pane \; display-message "Logging end."
