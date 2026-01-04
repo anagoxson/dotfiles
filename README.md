@@ -2,6 +2,39 @@
 
 このリポジトリには、各種設定ファイルが含まれています。
 
+## .gitconfig
+
+Gitの設定ファイルです。便利なエイリアスとデフォルトブランチ設定が含まれています。
+
+### 設定の適用方法
+
+1. `.gitconfig`をホームディレクトリにシンボリックリンクまたはコピー
+   ```bash
+   ln -s /path/to/dotfiles/.gitconfig ~/.gitconfig
+   # または
+   cp /path/to/dotfiles/.gitconfig ~/.gitconfig
+   ```
+
+2. 既存の設定と統合する場合（推奨）
+   ```bash
+   # 既存の設定をバックアップ
+   cp ~/.gitconfig ~/.gitconfig.backup
+   
+   # 新しい設定を追加（既存の設定は保持される）
+   cat ~/.gitconfig.backup >> ~/.gitconfig
+   ```
+
+### 機能
+
+- **エイリアス**: よく使うgitコマンドの短縮形
+  - `git s` = `git status`
+  - `git b` = `git branch`
+  - `git ba` = `git branch -a`
+  - `git r` = `git remote`
+  - `git rv` = `git remote -v`
+  - `git gr` = グラフィカルなログ表示
+- **デフォルトブランチ**: `main`をデフォルトブランチとして設定
+
 ## .tmux.conf
 
 tmuxの設定ファイルです。環境に応じて自動的に適切なクリップボードコマンドを選択します。
