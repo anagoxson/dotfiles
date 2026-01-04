@@ -2,35 +2,70 @@
 
 このリポジトリには、各種設定ファイルが含まれています。
 
-## .gitconfig
+## セットアップ方法
 
-Gitの設定ファイルです。便利なエイリアスとデフォルトブランチ設定が含まれています。
+### Linux環境
 
-### 設定の適用方法
-
-1. `.gitconfig`をホームディレクトリにコピー
+1. 依存パッケージのインストール
    ```bash
+   ./install.sh
+   ```
+   
+   このスクリプトは以下を自動的に行います：
+   - ディストリビューションの検出（Ubuntu/Debian、Fedora/RHEL、Arch Linux）
+   - ディスプレイサーバーの検出（Wayland/X11）
+   - tmuxとクリップボードツールのインストール
+
+2. 設定ファイルの適用
+   ```bash
+   # .gitconfigをコピー
    cp /path/to/dotfiles/.gitconfig ~/.gitconfig
-   ```
    
-   **注意**: シンボリックリンク（`ln -s`）は使用しないでください。`git config --global`で設定を追加した際に、リポジトリのファイルが変更されてしまう可能性があります。
-
-2. 既存の設定と統合する場合（推奨）
-   ```bash
-   # 既存の設定をバックアップ
-   cp ~/.gitconfig ~/.gitconfig.backup
-   
-   # 新しい設定を追加（既存の設定は保持される）
-   cat ~/.gitconfig.backup >> ~/.gitconfig
+   # .tmux.confをシンボリックリンクまたはコピー
+   ln -s /path/to/dotfiles/.tmux.conf ~/.tmux.conf
+   # または
+   cp /path/to/dotfiles/.tmux.conf ~/.tmux.conf
    ```
 
-3. **重要**: `user.name`と`user.email`を別途設定する必要があります
+3. Gitユーザー情報の設定
    ```bash
    git config --global user.name "Your Name"
    git config --global user.email "your.email@example.com"
    ```
    
    **注意**: これらの個人情報はリポジトリに含めないでください。各環境で個別に設定してください。
+
+### その他の環境
+
+#### Windows (WSL2)
+
+- **tmux**: 
+  ```bash
+  sudo apt-get update
+  sudo apt-get install tmux
+  ```
+- **clip.exe**: Windows標準コマンド（追加インストール不要）
+
+#### macOS
+
+- **tmux**: 
+  ```bash
+  brew install tmux
+  ```
+- **pbcopy**: macOS標準コマンド（追加インストール不要）
+- **reattach-to-user-namespace** (オプション): tmuxからクリップボードにアクセスする際に必要になる場合があります
+  ```bash
+  brew install reattach-to-user-namespace
+  ```
+
+## .gitconfig
+
+Gitの設定ファイルです。便利なエイリアスとデフォルトブランチ設定が含まれています。
+
+### 注意事項
+
+- **シンボリックリンクは使用しないでください**: `git config --global`で設定を追加した際に、リポジトリのファイルが変更されてしまう可能性があります。
+- **既存の設定と統合する場合**: 既存の`.gitconfig`がある場合は、バックアップを取ってから統合してください。
 
 ### 機能
 
@@ -47,104 +82,12 @@ Gitの設定ファイルです。便利なエイリアスとデフォルトブ�
 
 tmuxの設定ファイルです。環境に応じて自動的に適切なクリップボードコマンドを選択します。
 
-### 必要なインストール
+### 設定の適用後
 
-#### Windows (WSL2)
-
-- **tmux**: tmux本体
-  ```bash
-  # Ubuntu/Debian系
-  sudo apt-get update
-  sudo apt-get install tmux
-  
-  # または
-  sudo apt install tmux
-  ```
-
-- **clip.exe**: Windows標準コマンド（追加インストール不要）
-
-#### Linux (Wayland)
-
-- **tmux**: tmux本体
-  ```bash
-  # Ubuntu/Debian系
-  sudo apt-get update
-  sudo apt-get install tmux
-  
-  # Fedora/RHEL系
-  sudo dnf install tmux
-  
-  # Arch Linux系
-  sudo pacman -S tmux
-  ```
-
-- **wl-clipboard**: Wayland用クリップボードツール
-  ```bash
-  # Ubuntu/Debian系
-  sudo apt-get install wl-clipboard
-  
-  # Fedora/RHEL系
-  sudo dnf install wl-clipboard
-  
-  # Arch Linux系
-  sudo pacman -S wl-clipboard
-  ```
-
-#### Linux (X11)
-
-- **tmux**: tmux本体
-  ```bash
-  # Ubuntu/Debian系
-  sudo apt-get update
-  sudo apt-get install tmux
-  
-  # Fedora/RHEL系
-  sudo dnf install tmux
-  
-  # Arch Linux系
-  sudo pacman -S tmux
-  ```
-
-- **xclip**: X11用クリップボードツール
-  ```bash
-  # Ubuntu/Debian系
-  sudo apt-get install xclip
-  
-  # Fedora/RHEL系
-  sudo dnf install xclip
-  
-  # Arch Linux系
-  sudo pacman -S xclip
-  ```
-
-#### macOS
-
-- **tmux**: tmux本体
-  ```bash
-  # Homebrewを使用
-  brew install tmux
-  ```
-
-- **pbcopy**: macOS標準コマンド（追加インストール不要）
-
-- **reattach-to-user-namespace** (オプション): tmuxからクリップボードにアクセスする際に必要になる場合があります
-  ```bash
-  brew install reattach-to-user-namespace
-  ```
-
-### 設定の適用方法
-
-1. `.tmux.conf`をホームディレクトリにシンボリックリンクまたはコピー
-   ```bash
-   ln -s /path/to/dotfiles/.tmux.conf ~/.tmux.conf
-   # または
-   cp /path/to/dotfiles/.tmux.conf ~/.tmux.conf
-   ```
-
-2. tmuxの設定を再読み込み
-   ```bash
-   tmux source-file ~/.tmux.conf
-   ```
+tmuxの設定を再読み込みする場合：
+```bash
+tmux source-file ~/.tmux.conf
+```
 
 ### 機能
 
