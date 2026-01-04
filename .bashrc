@@ -2,9 +2,34 @@
 # Additional settings
 #
 
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
 # History settings
 HISTSIZE=100000
 HISTFILESIZE=200000
+
+# Ignore duplicate entries in history
+export HISTCONTROL=ignoreboth:erasedups
+# Add timestamp to history entries
+export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S '
+# Exclude specific commands from history
+export HISTIGNORE='ls:ll:la:cd:exit:clear:history'
+
+# Editor settings
+export EDITOR=vim
+export VISUAL=vim
 
 # Custom PS1 prompt
 # Check if color prompt is supported

@@ -1,3 +1,6 @@
+[core]
+	editor = vim
+
 [alias]
     s  = status
     b  = branch
