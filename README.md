@@ -25,6 +25,12 @@
    ln -s /path/to/dotfiles/.tmux.conf ~/.tmux.conf
    # または
    cp /path/to/dotfiles/.tmux.conf ~/.tmux.conf
+   
+   # .bashrcをシンボリックリンクまたはコピー
+   # 既存の.bashrcがある場合は、バックアップを取ってから統合してください
+   ln -s /path/to/dotfiles/.bashrc ~/.bashrc
+   # または
+   cp /path/to/dotfiles/.bashrc ~/.bashrc
    ```
 
 3. Gitユーザー情報の設定
@@ -77,6 +83,38 @@ Gitの設定ファイルです。便利なエイリアスとデフォルトブ�
   - `git rv` = `git remote -v`
   - `git gr` = グラフィカルなログ表示
 - **デフォルトブランチ**: `main`をデフォルトブランチとして設定
+
+## .bashrc
+
+bashの設定ファイルです。カスタムPS1プロンプトが含まれています。
+
+### 設定の適用方法
+
+1. 既存の`.bashrc`がない場合
+   ```bash
+   ln -s /path/to/dotfiles/.bashrc ~/.bashrc
+   # または
+   cp /path/to/dotfiles/.bashrc ~/.bashrc
+   ```
+
+2. 既存の`.bashrc`がある場合（推奨）
+   ```bash
+   # 既存の設定をバックアップ
+   cp ~/.bashrc ~/.bashrc.backup
+   
+   # 新しい設定を追加（既存の設定は保持される）
+   cat /path/to/dotfiles/.bashrc >> ~/.bashrc
+   ```
+
+3. 設定を反映
+   ```bash
+   source ~/.bashrc
+   # または新しいシェルセッションを開始
+   ```
+
+### 機能
+
+- **カスタムPS1プロンプト**: 日時、ユーザー名、ホスト名、作業ディレクトリ、履歴番号、終了ステータスを表示
 
 ## .tmux.conf
 
